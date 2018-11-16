@@ -39,7 +39,6 @@ class Dots:
     # PROBLEM 3: implement dot eating
     # BEGIN CODE CHANGES
     def eat(self, pacman_x, pacman_y):  # You might want/need to pass arguments here.
-        print(pacman_x, pacman_y)
         self.dots_handler(self.top_row, pacman_x, pacman_y)
         self.dots_handler(self.bottom_row, pacman_x, pacman_y)
         self.dots_handler(self.left_col, pacman_x, pacman_y)

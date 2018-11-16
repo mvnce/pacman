@@ -20,6 +20,8 @@ class Pinky(GameCharacter):
         self.looking = (0, 0)
         self.WIN_PROXIMITY = 80
         self.WALL_TOLERANCE = 2
+        self.last_move_direction = 'RIGHT'
+        self.last_update_location = (0, 0)
 
     def draw_self(self, x, y):
         """Draw Pinky to the screen"""
@@ -73,6 +75,47 @@ class Pinky(GameCharacter):
         # up or down depending on which direction Pacman is further away in.
         # START CODE CHANGES
 
+        def can_process():
+            flag = abs(self.last_update_location[0] - self.x) > self.CHAR_WIDTH / 2 or abs(
+                self.last_update_location[1] - self.y) > self.CHAR_WIDTH / 2
+            if flag:
+                self.last_update_location = (self.x, self.y)
+            return flag
+
+        def direction_change_handler(direction):
+            self.last_move_direction = operation
+            if direction == 'UP':
+                self.x_add = 0
+                self.y_add = -self.velocity
+            elif direction == 'DOWN':
+                self.x_add = 0
+                self.y_add = self.velocity
+            elif direction == 'LEFT':
+                self.x_add = -self.velocity
+                self.y_add = 0
+            elif direction == 'RIGHT':
+                self.x_add = self.velocity
+                self.y_add = 0
+
+        if (on_horz and on_vert) and can_process():
+            potential_operations = []
+
+            if up_down_part > 0:
+                potential_operations.append('DOWN')
+            elif up_down_part < 0:
+                potential_operations.append('UP')
+
+            if left_right_part > 0:
+                potential_operations.append('RIGHT')
+            elif left_right_part < 0:
+                potential_operations.append('LEFT')
+
+            for operation in potential_operations:
+                if operation != self.last_move_direction:
+                    direction_change_handler(operation)
+                    break
+
+            del potential_operations[:]  # cleanup
         # END CODE CHANGES
 
         # If the player wins, stop Pinky moving
