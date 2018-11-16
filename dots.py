@@ -38,8 +38,30 @@ class Dots:
     # TODO:
     # PROBLEM 3: implement dot eating
     # BEGIN CODE CHANGES
-    def eat(self):  # You might want/need to pass arguments here.
-        pass
+    def eat(self, pacman_x, pacman_y):  # You might want/need to pass arguments here.
+        print(pacman_x, pacman_y)
+        self.dots_handler(self.top_row, pacman_x, pacman_y)
+        self.dots_handler(self.bottom_row, pacman_x, pacman_y)
+        self.dots_handler(self.left_col, pacman_x, pacman_y)
+        self.dots_handler(self.right_col, pacman_x, pacman_y)
+    
+    def dots_handler(self, dots, pacman_x, pacman_y):
+        index = None
+
+        if len(dots) == 0:
+            return
+        for i in range(len(dots)):
+            if dots[i] == None:
+                continue
+
+            vertial_part = pacman_y - dots[i].y
+            horizontal_part = pacman_x - dots[i].x
+
+            if abs(vertial_part) < self.EAT_DIST and abs(horizontal_part) < self.EAT_DIST:
+                index = i
+                break
+        if index is not None:
+            del dots[index]
 
     # END CODE CHANGES
 

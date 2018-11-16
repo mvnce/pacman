@@ -22,7 +22,7 @@ class Pacman(GameCharacter):
         self.rot_end = 360
         self.mouth_speed = 5
         self.velocity = 3
-        self.WALL_TOLERANCE = 6
+        self.WALL_TOLERANCE = 20
         self.MOUTH_RIGHT_BEGIN_ANGLE = 0
         self.MOUTH_RIGHT_END_ANGLE = 360
         self.MOUTH_DOWN_BEGIN_ANGLE = 90
@@ -82,7 +82,7 @@ class Pacman(GameCharacter):
         # Based on PacMan's location, PacMan should gobble
         # dots from a different list.
         # BEGIN CODE CHANGES
-
+        self.maze.eat_dots(self.x, self.y)
         # END CODE CHANGES
 
     def control(self, keyCode):
